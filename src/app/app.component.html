@@ -4,24 +4,56 @@
         Welcome to {{title}}!!
     </h1>
 </div>
+<hr>
 <div style="text-align:center">
     <h2 *ngIf="list.length > 0">
         {{ list[0]['name'] }}'s turn
     </h2>
+    <button type="button" (click)="next()">Next</button>
+    <button type="button" (click)="sort()">Sort</button>
 </div>
-<div>
+<hr>
+<div align="center">
     <label for="name">Name</label>
     <input id="name" type="string" name="name" [(ngModel)]="name" />
     <label for="number">Number</label>
     <input id="number" type="number" name="number" [(ngModel)]="init" />
+    <label for="hp">HP</label>
+    <input id="hp" type="number" name="hp" [(ngModel)]="hp" />
+    <label for="notes">Notes</label>
+    <textarea id="notes" type="string" name="notes" [(ngModel)]="notes"></textarea>
     <button type="button" (click)="add()">Add</button>
-    <button type="button" (click)="next()">Next</button>
-    <button type="button" (click)="sort()">Sort</button>
-</div>
 
-<ol>
-  <li *ngFor="let i of list" class="col-1-4">
-    {{i.name}}
-    <button type="button" (click)="remove(i.id)">X</button>
-  </li>
-</ol>
+</div>
+<hr>
+<table style="text-align:center;" align="center">
+    <thead>
+        <tr>
+            <td>Order</td>
+            <td>Name</td>
+            <td>Notes</td>
+            <td>HP</td>
+            <td>Remove</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let i of list; let j = index;let odd = odd; let even = even" [ngClass]="{ odd: odd, even: even }">
+            <td>{{j + 1}}</td>
+            <td>{{i.name}}</td>
+            <td>
+                <textarea>{{i.notes}}</textarea>
+            </td>
+            <td>
+                <div>{{i.hp}}</div>
+                <div>
+                    <input type="number" [(ngModel)]="hpChange[j]" value="1" />
+                    <button type="button" (click)="heal(i, j)">+</button>
+                    <button type="button" (click)="damage(i,j)">-</button>
+                </div>
+            </td>
+            <td>
+                <div type="button" (click)="remove(i.id)">X</div>
+            </td>
+        </tr>
+    </tbody>
+</table>

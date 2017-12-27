@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import {MatTableDataSource, MatSort} from '@angular/material';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,11 +10,29 @@ export class AppComponent {
   id=0;
   name: string;
   init: number;
+  hp: number;
+  notes: string;
+  hpChange= [];
   public list: object[] = [];
-  
+
+  heal(person, index):void{
+    person.hp += this.hpChange[index]
+  }
+
+  damage(person,index):void{
+    person.hp -= this.hpChange[index]
+  }
+
   add(): void {
-    this.list.push({name:this.name, init:this.init, id:this.id})
-    this.id++
+    this.list.push({
+      name:this.name, 
+      init:this.init, 
+      id:this.id,
+      hp:this.hp,
+      notes:this.notes
+    });
+    this.id++;
+    this.hpChange.push(0)
   }
   next():void{
     let temp = this.list[0]
