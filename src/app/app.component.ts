@@ -6,7 +6,7 @@ import {MatTableDataSource} from '@angular/material';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Angular.io Initiative Tracker';
+  title = 'Angular.io D20 Initiative Tracker';
   id=0;
   name: string;
   init: number;
@@ -33,7 +33,13 @@ export class AppComponent {
       notes:this.notes
     });
     this.hpChange.push(0)
+    this.sort()
     this.data = new MatTableDataSource(this.list)
+    this.name="";
+    this.init=0;
+    this.hp=0
+    this.notes=""
+    document.getElementById('name').focus();
   }
   next():void{
     let temp = this.list[0]

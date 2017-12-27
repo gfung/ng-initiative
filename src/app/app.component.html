@@ -18,8 +18,8 @@
 
 </div>
 <hr>
-<div style="text-align:center">
-    <h2 *ngIf="list.length > 0">
+<div style="text-align:center" *ngIf="list.length > 0">
+    <h2>
         {{ list[0]['name'] }}'s turn
     </h2>
     <button type="button" (click)="next()">Next</button>
