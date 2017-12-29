@@ -9,13 +9,16 @@ export class AppComponent {
   hp : number;
   notes : string;
   hpChange = [0];
+  maxhp : number;
   public list : object[] = [];
   data = new MatTableDataSource(this.list)
   heal(person, index) : void {
-    person.hp += this.hpChange[index]
+    person.hp += this.hpChange[index];
+    this.hpChange[index] = 0
   }
   damage(person, index) : void {
-    person.hp -= this.hpChange[index]
+    person.hp -= this.hpChange[index];
+    this.hpChange[index] = 0
   }
   add() : void {
     let tempUser = {
@@ -23,6 +26,7 @@ export class AppComponent {
       init: this.init,
       id: this.list.length + 1,
       hp: this.hp,
+      maxhp: this.maxhp,
       notes: this.notes
     };
     this.hpChange.push(0);

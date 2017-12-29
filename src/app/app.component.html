@@ -12,6 +12,8 @@
     <input id="number" type="number" name="number" [(ngModel)]="init" />
     <label for="hp">HP</label>
     <input id="hp" type="number" name="hp" [(ngModel)]="hp" />
+    <label for="maxhp">Max HP</label>
+    <input id="maxhp" type="number" name="maxhp" [(ngModel)]="maxhp" />
     <label for="notes">Notes</label>
     <textarea id="notes" type="string" name="notes" [(ngModel)]="notes"></textarea>
     <button type="button" (click)="add()">Add</button>
@@ -63,13 +65,20 @@
         </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="remove">
-        <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
-        <mat-cell *matCellDef="let user">
-            <div type="button" (click)="remove(user.id)">X</div>
+    <ng-container matColumnDef="maxhp">
+        <mat-header-cell *matHeaderCellDef> Max HP </mat-header-cell>
+        <mat-cell *matCellDef="let user;">
+            {{user.maxhp}}
         </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['order','name', 'init','notes', 'hp', 'remove']"></mat-header-row>
-    <mat-row *matRowDef="let myRowData; columns: ['order','name', 'init','notes', 'hp', 'remove']"></mat-row>
+    <ng-container matColumnDef="remove">
+        <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+            <button type="button" (click)="remove(user.id)">X</button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['order','name', 'init','notes', 'maxhp', 'hp', 'remove']"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: ['order','name', 'init','notes', 'maxhp','hp', 'remove']"></mat-row>
 </mat-table>
