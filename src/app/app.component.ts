@@ -1,63 +1,69 @@
 import {Component} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
+import {MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 @Component({selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.css']})
 export class AppComponent {
   title = 'Angular.io D20 Initiative Tracker';
   id = 0;
-  name : string;
-  init : number;
-  hp : number;
-  notes : string;
+  name: string;
+  init: number;
+  hp: number;
+  notes: string;
   hpChange = [0];
-  maxhp : number;
-  public list : object[] = [];
-  data = new MatTableDataSource(this.list)
-  heal(person, index) : void {
-    person.hp += this.hpChange[index];
-    this.hpChange[index] = 0
+  acChange = [0];
+  maxhp: number;
+  ac: number;
+  pPerc: number;
+  public list: object[] = [];
+  data = new MatTableDataSource(this.list);
+  addTo(person, index, stat): void {
+    person[stat] += this[stat + 'Change'][index];
+    this[stat + 'Change'][index] = 0
   }
-  damage(person, index) : void {
-    person.hp -= this.hpChange[index];
-    this.hpChange[index] = 0
+  minusTo(person, index, stat): void {
+    person[stat] -= this[stat + 'Change'][index];
+    this[stat][index] = 0
   }
-  add() : void {
+  add(): void {
     let tempUser = {
       name: this.name,
       init: this.init,
       id: this.list.length + 1,
       hp: this.hp,
       maxhp: this.maxhp,
-      notes: this.notes
+      notes: this.notes,
+      ac: this.ac,
+      perc: this.pPerc,
     };
+    this.acChange.push(0)
     this.hpChange.push(0);
     this.list.push(tempUser)
     let current = this.list[0];
     this.sort()
     // get the index of who was current
     let remember;
-    for(let i = 0;i <this.list.length;i++){
-      if (current['id'] === this.list[i]['id']){
+    for (let i = 0; i < this.list.length; i++) {
+      if (current['id'] === this.list[i]['id']) {
         remember = i
       }
     }
-    for(let i = 0;i < remember;i++){
+    for (let i = 0; i < remember; i++) {
       this.next()
     }
     this.data = new MatTableDataSource(this.list);
-    this.name = "";
+    this.name = '';
     this.init = 0;
     this.hp = 0;
-    this.notes = "";
+    this.notes = '';
     document.getElementById('name').focus();
   }
-  next() : void {
+  next(): void {
     let temp = this.list[0];
     this.list.splice(0, 1);
     this.list.push(temp);
     this.data = new MatTableDataSource(this.list)
   }
-  sort() : void {
-    if(this.list.length > 1) {
+  sort(): void {
+    if (this.list.length > 1) {
       this
         .list
         .sort((a, b) => {
@@ -75,8 +81,21 @@ export class AppComponent {
     }
     this.data = new MatTableDataSource(this.list)
   }
-  remove(data) : void {
-    let arrLength = this.list.length;
+
+  confirmDelete(person): void {
+    document.getElementById('remove').classList.remove('confirm');
+    document.getElementById('cancel').classList.remove('confirm');
+    document.getElementById('confirmbutton').classList.add('confirm');
+  }
+
+  hide(): void {
+    document.getElementById('remove').classList.add('confirm');
+    document.getElementById('cancel').classList.add('confirm');
+    document.getElementById('confirmbutton').classList.remove('confirm');
+  }
+
+  remove(data): void {
+    const arrLength = this.list.length;
     let theOne;
     for (let i = 0; i < arrLength; i++) {
       if (this.list[i]['id'] === data) {

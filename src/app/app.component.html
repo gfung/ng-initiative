@@ -14,6 +14,10 @@
     <input id="hp" type="number" name="hp" [(ngModel)]="hp" />
     <label for="maxhp">Max HP</label>
     <input id="maxhp" type="number" name="maxhp" [(ngModel)]="maxhp" />
+    <label for="pPerc">Passive Perception</label>
+    <input id="pPerc" type="number" name="pPerc" [(ngModel)]="pPerc" />
+    <label for="ac">Armor Class</label>
+    <input id="ac" type="number" name="ac" [(ngModel)]="ac" />
     <label for="notes">Notes</label>
     <textarea id="notes" type="string" name="notes" [(ngModel)]="notes"></textarea>
     <button type="button" (click)="add()">Add</button>
@@ -44,7 +48,7 @@
     <ng-container matColumnDef="init">
         <mat-header-cell *matHeaderCellDef> Initiative </mat-header-cell>
         <mat-cell *matCellDef="let user">{{user.init}}&nbsp;
-            <input type="number" [(ngModel)]='user.init'/>
+            <input type="number" [(ngModel)]='user.init' />
         </mat-cell>
     </ng-container>
 
@@ -55,13 +59,23 @@
         </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="ac">
+        <mat-header-cell *matHeaderCellDef> Armor Class </mat-header-cell>
+        <mat-cell *matCellDef="let user;">
+            {{user.ac}}
+            <input type="number" [(ngModel)]="acChange[user.id]" value="1" />
+            <button type="button" (click)="addTo(user, user.id, 'ac')">+</button>
+            <button type="button" (click)="minusTo(user,user.id, 'ac')">-</button>
+        </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="hp">
         <mat-header-cell *matHeaderCellDef> HP </mat-header-cell>
         <mat-cell *matCellDef="let user;let index=index">
             {{user.hp}}
             <input type="number" [(ngModel)]="hpChange[user.id]" value="1" />
-            <button type="button" (click)="heal(user, user.id)">+</button>
-            <button type="button" (click)="damage(user,user.id)">-</button>
+            <button type="button" (click)="addTo(user, user.id, 'hp')">+</button>
+            <button type="button" (click)="minusTo(user,user.id, 'hp')">-</button>
         </mat-cell>
     </ng-container>
 
@@ -72,13 +86,22 @@
         </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="remove">
-        <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
-        <mat-cell *matCellDef="let user">
-            <button type="button" (click)="remove(user.id)">X</button>
+    <ng-container matColumnDef="perc">
+        <mat-header-cell *matHeaderCellDef> Perception (passive) </mat-header-cell>
+        <mat-cell *matCellDef="let user;">
+            {{user.perc}}
         </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="['order','name', 'init','notes', 'maxhp', 'hp', 'remove']"></mat-header-row>
-    <mat-row *matRowDef="let myRowData; columns: ['order','name', 'init','notes', 'maxhp','hp', 'remove']"></mat-row>
+    <ng-container matColumnDef="remove">
+        <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+            <button id="confirmbutton" type="button" (click)="confirmDelete()">X</button>
+            <button id="remove" class="confirm" type="button" (click)="remove(user.user.id)">Yes</button>
+            <button id="cancel" class="confirm" type="button" (click)="hide()">No</button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['order','name', 'init','notes', 'ac', 'perc', 'maxhp', 'hp', 'remove']"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: ['order','name', 'init','notes', 'ac','perc', 'maxhp','hp', 'remove']"></mat-row>
 </mat-table>
