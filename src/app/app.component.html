@@ -97,7 +97,7 @@
         <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
         <mat-cell *matCellDef="let user">
             <button id="confirmbutton" type="button" (click)="confirmDelete()">X</button>
-            <button id="remove" class="confirm" type="button" (click)="remove(user.user.id)">Yes</button>
+            <button id="remove" class="confirm" type="button" (click)="remove(user.id)">Yes</button>
             <button id="cancel" class="confirm" type="button" (click)="hide()">No</button>
         </mat-cell>
     </ng-container>
