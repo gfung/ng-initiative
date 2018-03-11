@@ -82,10 +82,10 @@ export class AppComponent {
     this.data = new MatTableDataSource(this.list)
   }
 
-  confirmDelete(person): void {
-    document.getElementById('remove').classList.remove('confirm');
-    document.getElementById('cancel').classList.remove('confirm');
-    document.getElementById('confirmbutton').classList.add('confirm');
+  confirmDelete(id): void {
+    document.getElementById('remove'+id).classList.remove('confirm');
+    document.getElementById('cancel'+id).classList.remove('confirm');
+    document.getElementById('confirm'+id).classList.add('confirm');
   }
 
   hide(): void {

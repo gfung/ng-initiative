@@ -96,9 +96,11 @@
     <ng-container matColumnDef="remove">
         <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
         <mat-cell *matCellDef="let user">
-            <button id="confirmbutton" type="button" (click)="confirmDelete()">X</button>
-            <button id="remove" class="confirm" type="button" (click)="remove(user.id)">Yes</button>
-            <button id="cancel" class="confirm" type="button" (click)="hide()">No</button>
+            <div>
+                <button id="{{'confirm'+user.id}}" type="button" (click)="confirmDelete(user.id)">X</button>
+            </div>
+            <button id="{{'remove'+user.id}}" class="confirm" type="button" (click)="remove(user.id)">Yes</button>
+            <button id="{{'cancel'+user.id}}" class="confirm" type="button" (click)="hide(user.id)">No</button>
         </mat-cell>
     </ng-container>
 
